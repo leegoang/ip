@@ -1,3 +1,6 @@
+# .class files
+src/main/java/*.class
+
 # IDEA files
 /.idea/
 /out/
