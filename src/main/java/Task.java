@@ -20,5 +20,12 @@ public class Task {
         return (this.isDone ? "X" : " "); // mark done task with X
     }
 
-    // ...
+    public void setDone(boolean isDone) {
+        this.isDone = isDone;
+    }
+
+    public static int getNumOfTasks() {
+        return numOfTasks;
+    }
+
 }

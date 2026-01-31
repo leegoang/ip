@@ -1,15 +1,11 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 public class Lego {
     public static void main(String[] args) {
         String line;
         Scanner in = new Scanner(System.in);
         Boolean isRunning = true;
-        String[] wordList = new String[100];
-        Boolean[] isCheckedList = new Boolean[100];
-        Arrays.fill(isCheckedList, false);
-        int wordNum = 0;
+        Task[] taskList = new Task[100];
 
         String openingText = " Hello! I'm [Lego]\n"
                 + " What can I do for you?\n"
@@ -26,38 +22,30 @@ public class Lego {
                 isRunning = false;
                 System.out.println(closingText);
             } else if (command.toLowerCase().equals("list")) {
-                for (int i = 0; i < wordNum; i++) {
-                    System.out.print(" " + Integer.toString(i + 1) + ".");
-                    printListLine(i, isCheckedList, wordList);
+                for (int i = 0; i < Task.getNumOfTasks(); i++) {
+                    Task currTask = taskList[i];
+                    System.out.println(" " + Integer.toString(currTask.taskNum)
+                            + ". [" + currTask.getStatusIcon() + "] "
+                            + currTask.getDescription());
                 }
             } else if (command.toLowerCase().equals("mark")) {
-                int itemIndex = Integer.parseInt(splitCommand[1]) - 1;
-                isCheckedList[itemIndex] = true;
+                Task task = taskList[Integer.parseInt(splitCommand[1]) - 1];
+                task.setDone(true);
                 System.out.println("Nice! I've marked this task as done:");
-                printListLine(itemIndex, isCheckedList, wordList);
+                System.out.println(" [" + task.getStatusIcon() + "] "
+                        + task.getDescription());
             } else if (command.toLowerCase().equals("unmark")) {
-                int itemIndex = Integer.parseInt(splitCommand[1]) - 1;
-                isCheckedList[itemIndex] = false;
+                Task task = taskList[Integer.parseInt(splitCommand[1]) - 1];
+                task.setDone(false);
                 System.out.println("OK, I've marked this task as not done yet:");
-                printListLine(itemIndex, isCheckedList, wordList);
+                System.out.println(" [" + task.getStatusIcon() + "] "
+                        + task.getDescription());
             } else {
                 System.out.println(" added: " + line);
-                wordList[wordNum] = line;
-                wordNum++;
+                Task task = new Task(line);
+                taskList[Task.getNumOfTasks() - 1] = task;
             }
         }
         in.close();
-    }
-
-    public static String applyTick(Boolean isChecked) {
-        if (isChecked) {
-            return "X";
-        }
-        return " ";
-    }
-
-    public static void printListLine(int num, Boolean[] isCheckedList, String[] wordList) {
-        System.out.println(" [" + applyTick(isCheckedList[num]) + "] "
-                + wordList[num]);
     }
 }
