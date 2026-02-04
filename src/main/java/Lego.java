@@ -18,32 +18,64 @@ public class Lego {
             line = in.nextLine();
             String[] splitCommand = line.split(" ");
             String command = splitCommand[0];
-            if (command.toLowerCase().equals("bye")) {
-                isRunning = false;
-                System.out.println(closingText);
-            } else if (command.toLowerCase().equals("list")) {
-                for (int i = 0; i < Task.getNumOfTasks(); i++) {
-                    Task currTask = taskList[i];
-                    System.out.println(" " + Integer.toString(currTask.taskNum)
-                            + ". [" + currTask.getStatusIcon() + "] "
-                            + currTask.getDescription());
-                }
-            } else if (command.toLowerCase().equals("mark")) {
-                Task task = taskList[Integer.parseInt(splitCommand[1]) - 1];
-                task.setDone(true);
-                System.out.println("Nice! I've marked this task as done:");
-                System.out.println(" [" + task.getStatusIcon() + "] "
-                        + task.getDescription());
-            } else if (command.toLowerCase().equals("unmark")) {
-                Task task = taskList[Integer.parseInt(splitCommand[1]) - 1];
-                task.setDone(false);
-                System.out.println("OK, I've marked this task as not done yet:");
-                System.out.println(" [" + task.getStatusIcon() + "] "
-                        + task.getDescription());
-            } else {
-                System.out.println(" added: " + line);
-                Task task = new Task(line);
-                taskList[Task.getNumOfTasks() - 1] = task;
+            switch (command) {
+                case "bye":
+                    isRunning = false;
+                    System.out.println(closingText);
+                    break;
+                case "list":
+                    for (int i = 0; i < Task.getNumOfTasks(); i++) {
+                        Task currTask = taskList[i];
+                        System.out.println(" " + Integer.toString(currTask.taskNum) + " "
+                                + taskList[i]);
+                    }
+                    break;
+                case "mark":
+                    Task toMarkTask = taskList[Integer.parseInt(splitCommand[1]) - 1];
+                    toMarkTask.setDone(true);
+                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println(toMarkTask);
+                    break;
+                case "unmark":
+                    Task task = taskList[Integer.parseInt(splitCommand[1]) - 1];
+                    task.setDone(false);
+                    System.out.println("OK, I've marked this task as not done yet:");
+                    System.out.println(task);
+                    break;
+                case "todo":
+                    System.out.println(" Got it. I've added this task:");
+                    String todoOnly = line.replace("todo ", "");
+                    Task newTodo = new Todo(todoOnly);
+                    taskList[Task.getNumOfTasks() - 1] = newTodo;
+                    System.out.println(newTodo);
+                    System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+                    break;
+                case "deadline":
+                    System.out.println(" Got it. I've added this task:");
+                    String[] splitDeadline = line.replace("deadline ", "").split(" /");
+                    String deadlineOnly = splitDeadline[0];
+                    String taskDeadline = splitDeadline[1];
+                    Task newDeadline = new Deadline(deadlineOnly, taskDeadline);
+                    taskList[Task.getNumOfTasks() - 1] = newDeadline;
+                    System.out.println(newDeadline);
+                    System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+                    break;
+                case "event":
+                    System.out.println(" Got it. I've added this task:");
+                    String[] splitEvent = line.replace("deadline ", "").split(" /");
+                    String eventOnly = splitEvent[0];
+                    String eventFrom = splitEvent[1];
+                    String eventTo = splitEvent[2];
+                    Task newEvent = new Event(eventOnly, eventFrom, eventTo);
+                    taskList[Task.getNumOfTasks() - 1] = newEvent;
+                    System.out.println(newEvent);
+                    System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+                    break;
+                default:
+                    System.out.println(" added: " + line);
+                    Task newTask = new Task(line);
+                    taskList[Task.getNumOfTasks() - 1] = newTask;
+                    break;
             }
         }
         in.close();

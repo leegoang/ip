@@ -28,4 +28,8 @@ public class Task {
         return numOfTasks;
     }
 
+    public String toString() {
+        return "[" + this.getStatusIcon() + "] " + this.description;
+    }
+
 }
