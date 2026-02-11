@@ -1,11 +1,14 @@
 import java.util.Scanner;
 
 public class Lego {
+
+    private static int MAX_TASKS = 100;
+
     public static void main(String[] args) {
         String line;
         Scanner in = new Scanner(System.in);
         Boolean isRunning = true;
-        Task[] taskList = new Task[100];
+        Task[] taskList = new Task[MAX_TASKS];
 
         String openingText = " Hello! I'm [Lego]\n"
                 + " What can I do for you?\n"
@@ -52,7 +55,7 @@ public class Lego {
                     break;
                 case "deadline":
                     System.out.println(" Got it. I've added this task:");
-                    String[] splitDeadline = line.replace("deadline ", "").split(" /");
+                    String[] splitDeadline = line.replace("deadline", "").split(" /");
                     String deadlineOnly = splitDeadline[0];
                     String taskDeadline = splitDeadline[1];
                     Task newDeadline = new Deadline(deadlineOnly, taskDeadline);
@@ -62,7 +65,7 @@ public class Lego {
                     break;
                 case "event":
                     System.out.println(" Got it. I've added this task:");
-                    String[] splitEvent = line.replace("deadline ", "").split(" /");
+                    String[] splitEvent = line.replace("event", "").split(" /");
                     String eventOnly = splitEvent[0];
                     String eventFrom = splitEvent[1];
                     String eventTo = splitEvent[2];
