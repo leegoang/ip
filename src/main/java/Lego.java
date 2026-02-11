@@ -3,12 +3,12 @@ import java.util.Scanner;
 public class Lego {
 
     private static int MAX_TASKS = 100;
+    private static Task[] taskList = new Task[MAX_TASKS];
 
     public static void main(String[] args) {
         String line;
         Scanner in = new Scanner(System.in);
         Boolean isRunning = true;
-        Task[] taskList = new Task[MAX_TASKS];
 
         String openingText = " Hello! I'm [Lego]\n"
                 + " What can I do for you?\n"
@@ -36,22 +36,22 @@ public class Lego {
                 case "mark":
                     Task toMarkTask = taskList[Integer.parseInt(splitCommand[1]) - 1];
                     toMarkTask.setDone(true);
-                    System.out.println("Nice! I've marked this task as done:");
+                    System.out.println(" Nice! I've marked this task as done:");
                     System.out.println(toMarkTask);
                     break;
                 case "unmark":
                     Task task = taskList[Integer.parseInt(splitCommand[1]) - 1];
                     task.setDone(false);
-                    System.out.println("OK, I've marked this task as not done yet:");
+                    System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println(task);
                     break;
                 case "todo":
-                    System.out.println(" Got it. I've added this task:");
-                    String todoOnly = line.replace("todo ", "");
-                    Task newTodo = new Todo(todoOnly);
-                    taskList[Task.getNumOfTasks() - 1] = newTodo;
-                    System.out.println(newTodo);
-                    System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+                    try {
+                        addTodo(line);
+                    } catch (LegoException e) {
+                        System.out.println(
+                                " Todo activity cannot be empty, ensure a task is written after 'todo'. Thankssssss!");
+                    }
                     break;
                 case "deadline":
                     System.out.println(" Got it. I've added this task:");
@@ -75,12 +75,23 @@ public class Lego {
                     System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
                     break;
                 default:
-                    System.out.println(" added: " + line);
-                    Task newTask = new Task(line);
-                    taskList[Task.getNumOfTasks() - 1] = newTask;
+                    System.out.println(
+                            "Invalid command. Please input the instruction again begining with 'todo', 'deadline', 'event', 'mark', 'unmark', 'list' or 'bye'.");
                     break;
             }
         }
         in.close();
+    }
+
+    private static void addTodo(String input) throws LegoException {
+        String todoOnly = input.replace("todo", "");
+        if (todoOnly.replace(" ", "").equals("")) {
+            throw new LegoException();
+        }
+        System.out.println(" Got it. I've added this task:");
+        Task newTodo = new Todo(todoOnly);
+        taskList[Task.getNumOfTasks() - 1] = newTodo;
+        System.out.println(newTodo);
+        System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
     }
 }
