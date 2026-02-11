@@ -1,0 +1,8 @@
+todo buy milk
+todo buy bread
+deadline CS2113 IP /Friday
+list
+event block event /5pm /7pm
+mark 1
+list
+bye
