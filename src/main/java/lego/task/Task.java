@@ -30,6 +30,10 @@ public class Task {
         return numOfTasks;
     }
 
+    public static void decreaseNumOfTasks() {
+        numOfTasks--;
+    }
+
     public String toString() {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }

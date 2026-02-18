@@ -72,6 +72,13 @@ public class Lego {
                                 " Missing start and/or end duration, or ensure that timings and task are separated from one another with a ' /'. Try again.");
                     }
                     break;
+                case "delete":
+                    try {
+                        deleteEvent();
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Task does not exist. Choose another number.");
+                    }
+                    break;
                 default:
                     System.out.println(
                             "Invalid command. Please input the instruction again begining with 'todo', 'deadline', 'event', 'mark', 'unmark', 'list' or 'bye'.");
@@ -79,6 +86,15 @@ public class Lego {
             }
         }
         in.close();
+    }
+
+    private static void deleteEvent() {
+        Task taskToDelete = taskList.get(InputParser.getTaskNum() - 1);
+        taskList.remove(InputParser.getTaskNum() - 1);
+        Task.decreaseNumOfTasks();
+        System.out.println(" Noted. I've removed this task:");
+        System.out.println(taskToDelete);
+        System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
     }
 
     private static void addNewEvent() {
@@ -118,8 +134,7 @@ public class Lego {
     private static void listTasks() {
         for (int i = 0; i < Task.getNumOfTasks(); i++) {
             Task currTask = taskList.get(i);
-            System.out.println(" " + Integer.toString(currTask.taskNum) + " "
-                    + currTask.toString());
+            System.out.println(" " + Integer.toString(currTask.taskNum) + currTask.toString());
         }
     }
 
