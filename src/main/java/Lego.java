@@ -28,13 +28,18 @@ public class Lego {
                     listTasks();
                     break;
                 case "mark":
-                    markTask();
+                    try {
+                        markTask(true);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Task does not exist. Choose another number.");
+                    }
                     break;
                 case "unmark":
-                    Task task = taskList[InputParser.getTaskNum() - 1];
-                    task.setDone(false);
-                    System.out.println(" OK, I've marked this task as not done yet:");
-                    System.out.println(task);
+                    try {
+                        markTask(false);
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Task does not exist. Choose another number.");
+                    }
                     break;
                 case "todo":
                     try {
@@ -45,25 +50,20 @@ public class Lego {
                     }
                     break;
                 case "deadline":
-                    System.out.println(" Got it. I've added this task:");
-                    String[] splitDeadline = InputParser.getInput().replace("deadline", "").split(" /");
-                    String deadlineOnly = splitDeadline[0];
-                    String taskDeadline = splitDeadline[1];
-                    Task newDeadline = new Deadline(deadlineOnly, taskDeadline);
-                    taskList[Task.getNumOfTasks() - 1] = newDeadline;
-                    System.out.println(newDeadline);
-                    System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+                    try {
+                        addNewDeadline();
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println(
+                                " Add a deadline, or ensure that the deadline is separated from the task with a ' /'. Try again.");
+                    }
                     break;
                 case "event":
-                    System.out.println(" Got it. I've added this task:");
-                    String[] splitEvent = InputParser.getInput().replace("event", "").split(" /");
-                    String eventOnly = splitEvent[0];
-                    String eventFrom = splitEvent[1];
-                    String eventTo = splitEvent[2];
-                    Task newEvent = new Event(eventOnly, eventFrom, eventTo);
-                    taskList[Task.getNumOfTasks() - 1] = newEvent;
-                    System.out.println(newEvent);
-                    System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+                    try {
+                        addNewEvent();
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println(
+                                " Missing start and/or end duration, or ensure that timings and task are separated from one another with a ' /'. Try again.");
+                    }
                     break;
                 default:
                     System.out.println(
@@ -74,10 +74,37 @@ public class Lego {
         in.close();
     }
 
-    private static void markTask() {
+    private static void addNewEvent() {
+        System.out.println(" Got it. I've added this task:");
+        String[] splitEvent = InputParser.getInput().replace("event", "").split(" /");
+        String eventOnly = splitEvent[0];
+        String eventFrom = splitEvent[1];
+        String eventTo = splitEvent[2];
+        Task newEvent = new Event(eventOnly, eventFrom, eventTo);
+        taskList[Task.getNumOfTasks() - 1] = newEvent;
+        System.out.println(newEvent);
+        System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+    }
+
+    private static void addNewDeadline() {
+        System.out.println(" Got it. I've added this task:");
+        String[] splitDeadline = InputParser.getInput().replace("deadline", "").split(" /");
+        String deadlineOnly = splitDeadline[0];
+        String taskDeadline = splitDeadline[1];
+        Task newDeadline = new Deadline(deadlineOnly, taskDeadline);
+        taskList[Task.getNumOfTasks() - 1] = newDeadline;
+        System.out.println(newDeadline);
+        System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+    }
+
+    private static void markTask(boolean complete) {
         Task task = taskList[InputParser.getTaskNum() - 1];
-        task.setDone(true);
-        System.out.println(" Nice! I've marked this task as done:");
+        task.setDone(complete);
+        if (complete) {
+            System.out.println(" Nice! I've marked this task as done:");
+        } else {
+            System.out.println(" OK, I've marked this task as not done yet:");
+        }
         System.out.println(task);
     }
 
