@@ -25,17 +25,10 @@ public class Lego {
                     System.out.println(closingText);
                     break;
                 case "list":
-                    for (int i = 0; i < Task.getNumOfTasks(); i++) {
-                        Task currTask = taskList[i];
-                        System.out.println(" " + Integer.toString(currTask.taskNum) + " "
-                                + taskList[i]);
-                    }
+                    listTasks();
                     break;
                 case "mark":
-                    Task toMarkTask = taskList[InputParser.getTaskNum() - 1];
-                    toMarkTask.setDone(true);
-                    System.out.println(" Nice! I've marked this task as done:");
-                    System.out.println(toMarkTask);
+                    markTask();
                     break;
                 case "unmark":
                     Task task = taskList[InputParser.getTaskNum() - 1];
@@ -79,6 +72,21 @@ public class Lego {
             }
         }
         in.close();
+    }
+
+    private static void markTask() {
+        Task task = taskList[InputParser.getTaskNum() - 1];
+        task.setDone(true);
+        System.out.println(" Nice! I've marked this task as done:");
+        System.out.println(task);
+    }
+
+    private static void listTasks() {
+        for (int i = 0; i < Task.getNumOfTasks(); i++) {
+            Task currTask = taskList[i];
+            System.out.println(" " + Integer.toString(currTask.taskNum) + " "
+                    + taskList[i]);
+        }
     }
 
     private static void addTodo(String input) throws LegoException {
