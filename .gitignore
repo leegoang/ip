@@ -1,5 +1,5 @@
 # .class files
-src/main/java/*.class
+src/main/java/lego/*/*.class
 
 # IDEA files
 /.idea/
