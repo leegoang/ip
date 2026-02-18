@@ -5,4 +5,5 @@ list
 event celebration /5pm /7pm
 mark 1
 list
+save
 bye
