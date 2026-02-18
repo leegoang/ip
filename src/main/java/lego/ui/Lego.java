@@ -1,6 +1,7 @@
 package lego.ui;
 
 import java.util.Scanner;
+import java.util.ArrayList;
 
 import lego.task.Deadline;
 import lego.task.Event;
@@ -9,8 +10,7 @@ import lego.task.Todo;
 
 public class Lego {
 
-    private static int MAX_TASKS = 100;
-    private static Task[] taskList = new Task[MAX_TASKS];
+    private static ArrayList<Task> taskList = new ArrayList<>();
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -72,6 +72,13 @@ public class Lego {
                                 " Missing start and/or end duration, or ensure that timings and task are separated from one another with a ' /'. Try again.");
                     }
                     break;
+                case "delete":
+                    try {
+                        deleteEvent();
+                    } catch (IndexOutOfBoundsException e) {
+                        System.out.println("Task does not exist. Choose another number.");
+                    }
+                    break;
                 default:
                     System.out.println(
                             "Invalid command. Please input the instruction again begining with 'todo', 'deadline', 'event', 'mark', 'unmark', 'list' or 'bye'.");
@@ -81,6 +88,15 @@ public class Lego {
         in.close();
     }
 
+    private static void deleteEvent() {
+        Task taskToDelete = taskList.get(InputParser.getTaskNum() - 1);
+        taskList.remove(InputParser.getTaskNum() - 1);
+        Task.decreaseNumOfTasks();
+        System.out.println(" Noted. I've removed this task:");
+        System.out.println(taskToDelete);
+        System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+    }
+
     private static void addNewEvent() {
         String[] splitEvent = InputParser.getInput().replace("event", "").split(" /");
         String eventOnly = splitEvent[0].trim();
@@ -88,7 +104,7 @@ public class Lego {
         String eventTo = splitEvent[2].trim();
         Event newEvent = new Event(eventOnly, eventFrom, eventTo);
         System.out.println(" Got it. I've added this task:");
-        taskList[Task.getNumOfTasks() - 1] = newEvent;
+        taskList.add(newEvent);
         System.out.println(newEvent);
         System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
     }
@@ -99,13 +115,13 @@ public class Lego {
         String deadlineOnly = splitDeadline[0].trim();
         String taskDeadline = splitDeadline[1].trim();
         Deadline newDeadline = new Deadline(deadlineOnly, taskDeadline);
-        taskList[Task.getNumOfTasks() - 1] = newDeadline;
+        taskList.add(newDeadline);
         System.out.println(newDeadline);
         System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
     }
 
     private static void markTask(boolean complete) {
-        Task task = taskList[InputParser.getTaskNum() - 1];
+        Task task = taskList.get(InputParser.getTaskNum() - 1);
         task.setDone(complete);
         if (complete) {
             System.out.println(" Nice! I've marked this task as done:");
@@ -117,9 +133,8 @@ public class Lego {
 
     private static void listTasks() {
         for (int i = 0; i < Task.getNumOfTasks(); i++) {
-            Task currTask = taskList[i];
-            System.out.println(" " + Integer.toString(currTask.taskNum) + " "
-                    + taskList[i]);
+            Task currTask = taskList.get(i);
+            System.out.println(" " + Integer.toString(currTask.taskNum) + currTask.toString());
         }
     }
 
@@ -130,7 +145,7 @@ public class Lego {
         }
         System.out.println(" Got it. I've added this task:");
         Task newTodo = new Todo(todoOnly);
-        taskList[Task.getNumOfTasks() - 1] = newTodo;
+        taskList.add(newTodo);
         System.out.println(newTodo);
         System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
     }
