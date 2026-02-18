@@ -1,4 +1,5 @@
 package lego.ui;
+
 import java.util.Scanner;
 
 public class InputParser {
@@ -16,7 +17,11 @@ public class InputParser {
         String[] splitCommand = input.split(" ");
         command = splitCommand[0];
         if (splitCommand.length > 1) {
-            taskNum = Integer.parseInt(splitCommand[1]);
+            try {
+                taskNum = Integer.parseInt(splitCommand[1]);
+            } catch (NumberFormatException e) {
+                // Do nothing, as taskNum will not be used for non-mark/unmark commands
+            }
         }
     }
 
@@ -31,5 +36,4 @@ public class InputParser {
     public static int getTaskNum() {
         return taskNum;
     }
-
 }

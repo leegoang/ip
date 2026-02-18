@@ -14,12 +14,12 @@
  2 [T][ ] buy bread
  3 [D][ ] CS2113 IP (by: Friday)
  Got it. I've added this task:
-[E][ ] block event (from: 5pm to: 7pm)
+[E][ ] celebration (from: 5pm to: 7pm)
  Now you have 4 tasks in the list.
-Nice! I've marked this task as done:
+ Nice! I've marked this task as done:
 [T][X] buy milk
  1 [T][X] buy milk
  2 [T][ ] buy bread
  3 [D][ ] CS2113 IP (by: Friday)
- 4 [E][ ] event block event (from: 5pm to: 7pm)
+ 4 [E][ ] celebration (from: 5pm to: 7pm)
  Bye. Hope to see you again soon!

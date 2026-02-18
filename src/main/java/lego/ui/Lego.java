@@ -82,12 +82,12 @@ public class Lego {
     }
 
     private static void addNewEvent() {
-        System.out.println(" Got it. I've added this task:");
         String[] splitEvent = InputParser.getInput().replace("event", "").split(" /");
-        String eventOnly = splitEvent[0];
-        String eventFrom = splitEvent[1];
-        String eventTo = splitEvent[2];
-        Task newEvent = new Event(eventOnly, eventFrom, eventTo);
+        String eventOnly = splitEvent[0].trim();
+        String eventFrom = splitEvent[1].trim();
+        String eventTo = splitEvent[2].trim();
+        Event newEvent = new Event(eventOnly, eventFrom, eventTo);
+        System.out.println(" Got it. I've added this task:");
         taskList[Task.getNumOfTasks() - 1] = newEvent;
         System.out.println(newEvent);
         System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
@@ -96,9 +96,9 @@ public class Lego {
     private static void addNewDeadline() {
         System.out.println(" Got it. I've added this task:");
         String[] splitDeadline = InputParser.getInput().replace("deadline", "").split(" /");
-        String deadlineOnly = splitDeadline[0];
-        String taskDeadline = splitDeadline[1];
-        Task newDeadline = new Deadline(deadlineOnly, taskDeadline);
+        String deadlineOnly = splitDeadline[0].trim();
+        String taskDeadline = splitDeadline[1].trim();
+        Deadline newDeadline = new Deadline(deadlineOnly, taskDeadline);
         taskList[Task.getNumOfTasks() - 1] = newDeadline;
         System.out.println(newDeadline);
         System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
@@ -124,7 +124,7 @@ public class Lego {
     }
 
     private static void addTodo(String input) throws LegoException {
-        String todoOnly = input.replace("todo", "");
+        String todoOnly = input.replace("todo", "").trim();
         if (todoOnly.replace(" ", "").equals("")) {
             throw new LegoException();
         }
