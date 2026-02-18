@@ -6,7 +6,6 @@ public class Lego {
     private static Task[] taskList = new Task[MAX_TASKS];
 
     public static void main(String[] args) {
-        String line;
         Scanner in = new Scanner(System.in);
         Boolean isRunning = true;
 
@@ -18,9 +17,8 @@ public class Lego {
 
         System.out.println(openingText);
         while (isRunning) {
-            line = in.nextLine();
-            String[] splitCommand = line.split(" ");
-            String command = splitCommand[0];
+            InputParser.getNextLine(in);
+            String command = InputParser.getCommand();
             switch (command) {
                 case "bye":
                     isRunning = false;
@@ -34,20 +32,20 @@ public class Lego {
                     }
                     break;
                 case "mark":
-                    Task toMarkTask = taskList[Integer.parseInt(splitCommand[1]) - 1];
+                    Task toMarkTask = taskList[InputParser.getTaskNum() - 1];
                     toMarkTask.setDone(true);
                     System.out.println(" Nice! I've marked this task as done:");
                     System.out.println(toMarkTask);
                     break;
                 case "unmark":
-                    Task task = taskList[Integer.parseInt(splitCommand[1]) - 1];
+                    Task task = taskList[InputParser.getTaskNum() - 1];
                     task.setDone(false);
                     System.out.println(" OK, I've marked this task as not done yet:");
                     System.out.println(task);
                     break;
                 case "todo":
                     try {
-                        addTodo(line);
+                        addTodo(InputParser.getInput());
                     } catch (LegoException e) {
                         System.out.println(
                                 " Todo activity cannot be empty, ensure a task is written after 'todo'. Thankssssss!");
@@ -55,7 +53,7 @@ public class Lego {
                     break;
                 case "deadline":
                     System.out.println(" Got it. I've added this task:");
-                    String[] splitDeadline = line.replace("deadline", "").split(" /");
+                    String[] splitDeadline = InputParser.getInput().replace("deadline", "").split(" /");
                     String deadlineOnly = splitDeadline[0];
                     String taskDeadline = splitDeadline[1];
                     Task newDeadline = new Deadline(deadlineOnly, taskDeadline);
@@ -65,7 +63,7 @@ public class Lego {
                     break;
                 case "event":
                     System.out.println(" Got it. I've added this task:");
-                    String[] splitEvent = line.replace("event", "").split(" /");
+                    String[] splitEvent = InputParser.getInput().replace("event", "").split(" /");
                     String eventOnly = splitEvent[0];
                     String eventFrom = splitEvent[1];
                     String eventTo = splitEvent[2];
