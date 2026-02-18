@@ -1,7 +1,9 @@
+package lego.task;
+
 public class Task {
     protected String description;
     protected boolean isDone;
-    protected int taskNum;
+    public int taskNum;
 
     protected static int numOfTasks = 0;
 
