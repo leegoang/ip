@@ -1,3 +1,4 @@
+package lego.ui;
 import java.util.Scanner;
 
 public class InputParser {

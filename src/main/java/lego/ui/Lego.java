@@ -2,7 +2,6 @@ package lego.ui;
 
 import java.util.Scanner;
 
-import LegoException;
 import lego.task.Deadline;
 import lego.task.Event;
 import lego.task.Task;
