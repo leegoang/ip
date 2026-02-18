@@ -1,6 +1,7 @@
  Hello! I'm [Lego]
  What can I do for you?
  Ready to go shopping? Because I am! :D Type something and I will record it for you!
+ File not found. Starting with an empty task list.
  Got it. I've added this task:
  [T][ ] buy milk
  Now you have 1 tasks in the list.

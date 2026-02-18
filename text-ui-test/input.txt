@@ -7,4 +7,5 @@ mark 1
 list
 delete 1
 list
+save
 bye

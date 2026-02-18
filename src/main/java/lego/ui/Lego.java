@@ -1,8 +1,11 @@
 package lego.ui;
 
 import java.util.Scanner;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import lego.database.DatabaseHandler;
 import lego.task.Deadline;
 import lego.task.Event;
 import lego.task.Task;
@@ -10,7 +13,7 @@ import lego.task.Todo;
 
 public class Lego {
 
-    private static ArrayList<Task> taskList = new ArrayList<>();
+    private static ArrayList<Task> taskList = new ArrayList<Task>();
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -21,8 +24,14 @@ public class Lego {
                 + " Ready to go shopping? Because I am! :D"
                 + " Type something and I will record it for you!";
         String closingText = " Bye. Hope to see you again soon!";
-
         System.out.println(openingText);
+
+        try {
+            taskList = DatabaseHandler.loadFileContents();
+        } catch (FileNotFoundException e) {
+            System.out.println(" File not found. Starting with an empty task list.");
+        }
+
         while (isRunning) {
             InputParser.getNextLine(in);
             String command = InputParser.getCommand();
@@ -79,6 +88,13 @@ public class Lego {
                         System.out.println("Task does not exist. Choose another number.");
                     }
                     break;
+                case "save":
+                    try {
+                        DatabaseHandler.saveFileContents(taskList);
+                    } catch (IOException e) {
+                        System.out.println(" Error saving file. Please try again.");
+                    }
+                    break;
                 default:
                     System.out.println(
                             "Invalid command. Please input the instruction again begining with 'todo', 'deadline', 'event', 'mark', 'unmark', 'list' or 'bye'.");
@@ -106,7 +122,7 @@ public class Lego {
         System.out.println(" Got it. I've added this task:");
         taskList.add(newEvent);
         System.out.println(newEvent);
-        System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+        System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
     }
 
     private static void addNewDeadline() {
@@ -117,7 +133,7 @@ public class Lego {
         Deadline newDeadline = new Deadline(deadlineOnly, taskDeadline);
         taskList.add(newDeadline);
         System.out.println(newDeadline);
-        System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+        System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
     }
 
     private static void markTask(boolean complete) {
@@ -147,6 +163,6 @@ public class Lego {
         Task newTodo = new Todo(todoOnly);
         taskList.add(newTodo);
         System.out.println(newTodo);
-        System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
+        System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
     }
 }
