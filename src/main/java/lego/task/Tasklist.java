@@ -102,4 +102,20 @@ public class Tasklist {
         System.out.println(newTodo);
         System.out.println(" Now you have " + this.taskList.size() + " tasks in the list.");
     }
+
+    public void findTask(String input) {
+        boolean atLeastOneMatch = false;
+        String keyword = input.replace("find", "").trim();
+        System.out.println(" Here are the matching tasks in your list:");
+        for (int i = 0; i < Task.getNumOfTasks(); i++) {
+            Task currTask = this.taskList.get(i);
+            if (currTask.getDescription().contains(keyword)) {
+                atLeastOneMatch = true;
+                System.out.println(" " + Integer.toString(currTask.taskNum) + currTask.toString());
+            }
+        }
+        if (!atLeastOneMatch) {
+            System.out.println(" No matching tasks found.");
+        }
+    }
 }
