@@ -7,7 +7,7 @@ REM delete output from previous run
 if exist ACTUAL.TXT del ACTUAL.TXT
 
 REM compile the code into the bin folder
-javac -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\lego\*.java ..\src\main\java\lego\task\*.java ..\src\main\java\lego\ui\*.java ..\src\main\java\lego\database\*.java ..\src\main\java\lego\exception\*.java ..\src\main\java\lego\parser\*.java
+javac -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\lego\*.java ..\src\main\java\lego\task\*.java ..\src\main\java\lego\ui\*.java ..\src\main\java\lego\database\*.java ..\src\main\java\lego\exception\*.java ..\src\main\java\lego\parser\*.java ..\src\main\java\lego\command\*.java
 IF ERRORLEVEL 1 (
     echo ********** BUILD FAILURE **********
     exit /b 1

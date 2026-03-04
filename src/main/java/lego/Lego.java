@@ -1,14 +1,12 @@
 package lego;
 
-import java.util.Scanner;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import lego.database.DatabaseHandler;
-import lego.exception.LegoException;
 import lego.parser.InputParser;
 import lego.task.Tasklist;
 import lego.ui.Ui;
+import lego.command.Command;
 
 public class Lego {
 
@@ -29,77 +27,21 @@ public class Lego {
     }
 
     public void run() {
-        Scanner in = new Scanner(System.in);
+        InputParser inputParser = new InputParser();
         Boolean isRunning = true;
 
         this.ui.showOpeningText();
 
         while (isRunning) {
-            InputParser.getNextLine(in);
-            String command = InputParser.getCommand();
-            switch (command) {
-                case "bye":
-                    isRunning = false;
-                    this.ui.showClosingText();
-                    break;
-                case "list":
-                    this.tasks.listTasks();
-                    break;
-                case "mark":
-                    try {
-                        this.tasks.markTask(InputParser.getTaskNum());
-                    } catch (IndexOutOfBoundsException e) {
-                        this.ui.showInvalidNumberError();
-                    }
-                    break;
-                case "unmark":
-                    try {
-                        this.tasks.unmarkTask(InputParser.getTaskNum());
-                    } catch (IndexOutOfBoundsException e) {
-                        this.ui.showInvalidNumberError();
-                    }
-                    break;
-                case "todo":
-                    try {
-                        this.tasks.addTodo(InputParser.getInput());
-                    } catch (LegoException e) {
-                        this.ui.showEmptyDescriptionError("todo");
-                    }
-                    break;
-                case "deadline":
-                    try {
-                        this.tasks.addNewDeadline(InputParser.getInput());
-                    } catch (IndexOutOfBoundsException e) {
-                        this.ui.showDeadlineFormatError();
-                    }
-                    break;
-                case "event":
-                    try {
-                        this.tasks.addNewEvent(InputParser.getInput());
-                    } catch (IndexOutOfBoundsException e) {
-                        this.ui.showEventFormatError();
-                    }
-                    break;
-                case "delete":
-                    try {
-                        this.tasks.deleteEvent(InputParser.getTaskNum());
-                    } catch (IndexOutOfBoundsException e) {
-                        this.ui.showInvalidNumberError();
-                    }
-                    break;
-                case "save":
-                    try {
-                        this.dbHandler.saveFileContents(this.tasks.getTaskList());
-                    } catch (IOException e) {
-                        this.ui.showFileSaveError();
-                    }
-                    break;
-                default:
-                    this.ui.showInvalidCommandError();
-                    break;
-            }
+            inputParser.getNextLine();
+            String instruction = inputParser.getCommand();
+            int taskNum = inputParser.getTaskNum();
+            String input = inputParser.getInput();
+            Command cmd = new Command(instruction, input, taskNum);
+            cmd.execute(this.tasks, this.ui, this.dbHandler);
+            isRunning = cmd.isRunning();
         }
-        in.close();
+        inputParser.getScanner().close();
     }
 
     public static void main(String[] args) {
