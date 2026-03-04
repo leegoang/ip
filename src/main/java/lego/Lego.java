@@ -11,7 +11,8 @@ import lego.command.Command;
 /**
  * Main entry point for the Lego task management application.
  * 
- * Initializes the application components (database, UI, task list) and runs the main event loop
+ * Initializes the application components (database, UI, task list) and runs the
+ * main event loop
  * to process user commands until the application is terminated.
  */
 public class Lego {
@@ -23,7 +24,8 @@ public class Lego {
     /**
      * Constructs a Lego instance and initializes the application.
      * 
-     * Initializes the database handler, task list, and UI. Attempts to load existing tasks
+     * Initializes the database handler, task list, and UI. Attempts to load
+     * existing tasks
      * from the specified file. If the file is not found, displays an error message.
      * 
      * @param filePath the path to the data file for persisting tasks
@@ -43,7 +45,8 @@ public class Lego {
     /**
      * Runs the main event loop of the application.
      * 
-     * Continuously reads user input, parses commands, executes them, and updates the task list
+     * Continuously reads user input, parses commands, executes them, and updates
+     * the task list
      * and database until the user initiates shutdown.
      */
     public void run() {
@@ -66,8 +69,8 @@ public class Lego {
 
     /**
      * Main method that serves as the entry point for the application.
-     * 
-     * @param args command line arguments (unused)
+     * Initializes a Lego instance with the specified data file path and starts the
+     * application.
      */
     public static void main(String[] args) {
         Lego lego = new Lego("../data/lego.txt");
