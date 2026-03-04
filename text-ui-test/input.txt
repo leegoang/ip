@@ -3,7 +3,7 @@ todo buy bread
 todo buy chicken
 deadline CS2113 IP /Friday
 list
-event celebration /5pm /7pm
+event celebration /from 5pm /to 7pm
 mark 1
 list
 delete 1
