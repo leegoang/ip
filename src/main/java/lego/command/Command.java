@@ -82,6 +82,9 @@ public class Command {
                     ui.showFileSaveError();
                 }
                 break;
+            case "find":
+                tasks.findTask(this.input);
+                break;
             default:
                 ui.showInvalidCommandError();
                 break;
