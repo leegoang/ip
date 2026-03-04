@@ -14,31 +14,31 @@ import lego.task.Todo;
 import java.util.ArrayList;
 
 public class DatabaseHandler {
-    private static String filePath = "../data/lego.txt";
+    private String filePath = "../data/lego.txt";
 
     public DatabaseHandler(String filePath) {
-        DatabaseHandler.filePath = filePath;
+        this.filePath = filePath;
     }
 
     public String getFilePath() {
-        return filePath;
+        return this.filePath;
     }
 
-    public static void writeToFile(String textToAdd) throws IOException {
-        File file = new File(filePath);
+    public void writeToFile(String textToAdd) throws IOException {
+        File file = new File(this.filePath);
         file.getParentFile().mkdirs();
-        FileWriter fw = new FileWriter(filePath);
+        FileWriter fw = new FileWriter(this.filePath);
         fw.write(textToAdd);
         fw.close();
     }
 
-    public static void appendToFile(String textToAppend) throws IOException {
-        FileWriter fw = new FileWriter(filePath, true);
+    public void appendToFile(String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(this.filePath, true);
         fw.write(textToAppend);
         fw.close();
     }
 
-    public static void saveFileContents(ArrayList<Task> taskList) throws IOException {
+    public void saveFileContents(ArrayList<Task> taskList) throws IOException {
         String lineEntry = "";
         for (Task task : taskList) {
             String taskType = "";
@@ -58,12 +58,12 @@ public class DatabaseHandler {
             }
             lineEntry += "\n";
         }
-        writeToFile(lineEntry);
+        this.writeToFile(lineEntry);
 
     }
 
-    public static ArrayList<Task> loadFileContents() throws FileNotFoundException {
-        File f = new File(filePath);
+    public ArrayList<Task> loadFileContents() throws FileNotFoundException {
+        File f = new File(this.filePath);
         Scanner s = new Scanner(f);
         ArrayList<Task> taskList = new ArrayList<Task>();
         while (s.hasNext()) {
