@@ -7,18 +7,32 @@ import lego.exception.LegoException;
 import lego.task.Tasklist;
 import lego.database.DatabaseHandler;
 
+/**
+ * Represents a command that can be executed on the task list.
+ * 
+ * Parses and executes user commands such as adding, deleting, and marking
+ * tasks.
+ * Manages the running state of the application.
+ */
 public class Command {
+
+    /**
+     * Constructs a Command with the specified instruction, input, and task number.
+     * 
+     * @param instruction the command type (e.g., "todo", "deadline", "delete")
+     * @param input       the additional input for the command
+     * @param taskNum     the task number to operate on
+     */
+    public Command(String instruction, String input, int taskNum) {
+        this.command = instruction;
+        this.input = input;
+        this.taskNum = taskNum;
+    }
 
     private String command;
     private int taskNum;
     private String input;
     private boolean isRunning = true;
-
-    public Command(String command, String input, int taskNum) {
-        this.command = command;
-        this.input = input;
-        this.taskNum = taskNum;
-    }
 
     public String getCommand() {
         return this.command;
@@ -77,7 +91,7 @@ public class Command {
                 break;
             case "save":
                 try {
-                    dbHandler.saveFileContents(tasks.getTaskList());
+                    dbHandler.saveToFile(tasks.getTaskList());
                 } catch (IOException e) {
                     ui.showFileSaveError();
                 }
@@ -91,6 +105,11 @@ public class Command {
         }
     }
 
+    /**
+     * Determines whether the application should continue running.
+     * 
+     * @return true if the application should continue, false if it should terminate
+     */
     public boolean isRunning() {
         return this.isRunning;
     }
