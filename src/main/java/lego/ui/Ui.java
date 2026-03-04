@@ -26,7 +26,7 @@ public class Ui {
 
     public void showInvalidCommandError() {
         System.out.println(
-                "Invalid command. Please input the instruction again begining with 'todo', 'deadline', 'event', 'mark', 'unmark', 'list' or 'bye'.");
+                "Invalid command. Please input the instruction again begining with 'todo', 'deadline', 'event', 'mark', 'unmark', 'list', 'final' or 'bye'.");
     }
 
     public void showInvalidNumberError() {
