@@ -1,0 +1,105 @@
+package lego.task;
+
+import java.util.ArrayList;
+
+import lego.exception.LegoException;
+
+public class Tasklist {
+
+    private ArrayList<Task> taskList;
+
+    public Tasklist() {
+        this.taskList = new ArrayList<>();
+    }
+
+    public void addTask(Task task) {
+        this.taskList.add(task);
+    }
+
+    public void removeTask(int index) {
+        if (index > 0 && index <= this.taskList.size()) {
+            this.taskList.remove(index - 1);
+        } else {
+            throw new IndexOutOfBoundsException("Task does not exist. Choose another number.");
+        }
+    }
+
+    public ArrayList<Task> getTaskList() {
+        return this.taskList;
+    }
+
+    public void setTaskList(ArrayList<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    public void markTask(int index) {
+        if (index >= 0 && index < this.taskList.size()) {
+            this.taskList.get(index - 1).setDone(true);
+            System.out.println(" Nice! I've marked this task as done:");
+            System.out.println(this.taskList.get(index - 1));
+        } else {
+            throw new IndexOutOfBoundsException("Task does not exist. Choose another number.");
+        }
+    }
+
+    public void unmarkTask(int index) {
+        if (index > 0 && index <= this.taskList.size()) {
+            this.taskList.get(index - 1).setDone(false);
+            System.out.println(" OK, I've marked this task as not done yet:");
+            System.out.println(this.taskList.get(index - 1));
+        } else {
+            throw new IndexOutOfBoundsException("Task does not exist. Choose another number.");
+        }
+    }
+
+    public void deleteEvent(int index) {
+        Task taskToDelete = this.taskList.get(index - 1);
+        this.taskList.remove(index - 1);
+        Task.decreaseNumOfTasks();
+        System.out.println(" Noted. I've removed this task:");
+        System.out.println(taskToDelete);
+        System.out.println(" Now you have " + this.taskList.size() + " tasks in the list.");
+    }
+
+    public void addNewEvent(String input) {
+        String[] splitEvent = input.replace("event", "").split(" /");
+        String eventOnly = splitEvent[0].trim();
+        String eventFrom = splitEvent[1].trim();
+        String eventTo = splitEvent[2].trim();
+        Event newEvent = new Event(eventOnly, eventFrom, eventTo);
+        System.out.println(" Got it. I've added this task:");
+        this.taskList.add(newEvent);
+        System.out.println(newEvent);
+        System.out.println(" Now you have " + this.taskList.size() + " tasks in the list.");
+    }
+
+    public void addNewDeadline(String input) {
+        System.out.println(" Got it. I've added this task:");
+        String[] splitDeadline = input.replace("deadline", "").split(" /");
+        String deadlineOnly = splitDeadline[0].trim();
+        String taskDeadline = splitDeadline[1].trim();
+        Deadline newDeadline = new Deadline(deadlineOnly, taskDeadline);
+        this.taskList.add(newDeadline);
+        System.out.println(newDeadline);
+        System.out.println(" Now you have " + this.taskList.size() + " tasks in the list.");
+    }
+
+    public void listTasks() {
+        for (int i = 0; i < Task.getNumOfTasks(); i++) {
+            Task currTask = this.taskList.get(i);
+            System.out.println(" " + Integer.toString(currTask.taskNum) + currTask.toString());
+        }
+    }
+
+    public void addTodo(String input) throws LegoException {
+        String todoOnly = input.replace("todo", "").trim();
+        if (todoOnly.replace(" ", "").equals("")) {
+            throw new LegoException();
+        }
+        System.out.println(" Got it. I've added this task:");
+        Task newTodo = new Todo(todoOnly);
+        this.taskList.add(newTodo);
+        System.out.println(newTodo);
+        System.out.println(" Now you have " + this.taskList.size() + " tasks in the list.");
+    }
+}
