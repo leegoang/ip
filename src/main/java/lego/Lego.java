@@ -69,8 +69,8 @@ public class Lego {
 
     /**
      * Main method that serves as the entry point for the application.
-     * Initializes a Lego instance with the specified data file path and starts the
-     * application.
+     * 
+     * @param args command line arguments (unused)
      */
     public static void main(String[] args) {
         Lego lego = new Lego("../data/lego.txt");
