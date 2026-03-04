@@ -3,17 +3,15 @@ package lego.ui;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import lego.database.DatabaseHandler;
-import lego.task.Deadline;
-import lego.task.Event;
-import lego.task.Task;
-import lego.task.Todo;
+import lego.exception.LegoException;
+import lego.parser.InputParser;
+import lego.task.Tasklist;
 
 public class Lego {
 
-    private static ArrayList<Task> taskList = new ArrayList<Task>();
+    private static Tasklist taskList = new Tasklist();
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -27,7 +25,7 @@ public class Lego {
         System.out.println(openingText);
 
         try {
-            taskList = DatabaseHandler.loadFileContents();
+            taskList.setTaskList(DatabaseHandler.loadFileContents());
         } catch (FileNotFoundException e) {
             System.out.println(" File not found. Starting with an empty task list.");
         }
@@ -41,25 +39,25 @@ public class Lego {
                     System.out.println(closingText);
                     break;
                 case "list":
-                    listTasks();
+                    taskList.listTasks();
                     break;
                 case "mark":
                     try {
-                        markTask(true);
+                        taskList.markTask(InputParser.getTaskNum());
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Task does not exist. Choose another number.");
                     }
                     break;
                 case "unmark":
                     try {
-                        markTask(false);
+                        taskList.unmarkTask(InputParser.getTaskNum());
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Task does not exist. Choose another number.");
                     }
                     break;
                 case "todo":
                     try {
-                        addTodo(InputParser.getInput());
+                        taskList.addTodo(InputParser.getInput());
                     } catch (LegoException e) {
                         System.out.println(
                                 " Todo activity cannot be empty, ensure a task is written after 'todo'. Thankssssss!");
@@ -67,7 +65,7 @@ public class Lego {
                     break;
                 case "deadline":
                     try {
-                        addNewDeadline();
+                        taskList.addNewDeadline(InputParser.getInput());
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println(
                                 " Add a deadline, or ensure that the deadline is separated from the task with a ' /'. Try again.");
@@ -75,7 +73,7 @@ public class Lego {
                     break;
                 case "event":
                     try {
-                        addNewEvent();
+                        taskList.addNewEvent(InputParser.getInput());
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println(
                                 " Missing start and/or end duration, or ensure that timings and task are separated from one another with a ' /'. Try again.");
@@ -83,14 +81,14 @@ public class Lego {
                     break;
                 case "delete":
                     try {
-                        deleteEvent();
+                        taskList.deleteEvent(InputParser.getTaskNum());
                     } catch (IndexOutOfBoundsException e) {
                         System.out.println("Task does not exist. Choose another number.");
                     }
                     break;
                 case "save":
                     try {
-                        DatabaseHandler.saveFileContents(taskList);
+                        DatabaseHandler.saveFileContents(taskList.getTaskList());
                     } catch (IOException e) {
                         System.out.println(" Error saving file. Please try again.");
                     }
@@ -104,65 +102,72 @@ public class Lego {
         in.close();
     }
 
-    private static void deleteEvent() {
-        Task taskToDelete = taskList.get(InputParser.getTaskNum() - 1);
-        taskList.remove(InputParser.getTaskNum() - 1);
-        Task.decreaseNumOfTasks();
-        System.out.println(" Noted. I've removed this task:");
-        System.out.println(taskToDelete);
-        System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the list.");
-    }
+    // private static void deleteEvent() {
+    // Task taskToDelete = taskList.get(InputParser.getTaskNum() - 1);
+    // taskList.remove(InputParser.getTaskNum() - 1);
+    // Task.decreaseNumOfTasks();
+    // System.out.println(" Noted. I've removed this task:");
+    // System.out.println(taskToDelete);
+    // System.out.println(" Now you have " + Task.getNumOfTasks() + " tasks in the
+    // list.");
+    // }
 
-    private static void addNewEvent() {
-        String[] splitEvent = InputParser.getInput().replace("event", "").split(" /");
-        String eventOnly = splitEvent[0].trim();
-        String eventFrom = splitEvent[1].trim();
-        String eventTo = splitEvent[2].trim();
-        Event newEvent = new Event(eventOnly, eventFrom, eventTo);
-        System.out.println(" Got it. I've added this task:");
-        taskList.add(newEvent);
-        System.out.println(newEvent);
-        System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
-    }
+    // private static void addNewEvent() {
+    // String[] splitEvent = InputParser.getInput().replace("event", "").split("
+    // /");
+    // String eventOnly = splitEvent[0].trim();
+    // String eventFrom = splitEvent[1].trim();
+    // String eventTo = splitEvent[2].trim();
+    // Event newEvent = new Event(eventOnly, eventFrom, eventTo);
+    // System.out.println(" Got it. I've added this task:");
+    // taskList.add(newEvent);
+    // System.out.println(newEvent);
+    // System.out.println(" Now you have " + taskList.size() + " tasks in the
+    // list.");
+    // }
 
-    private static void addNewDeadline() {
-        System.out.println(" Got it. I've added this task:");
-        String[] splitDeadline = InputParser.getInput().replace("deadline", "").split(" /");
-        String deadlineOnly = splitDeadline[0].trim();
-        String taskDeadline = splitDeadline[1].trim();
-        Deadline newDeadline = new Deadline(deadlineOnly, taskDeadline);
-        taskList.add(newDeadline);
-        System.out.println(newDeadline);
-        System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
-    }
+    // private static void addNewDeadline() {
+    // System.out.println(" Got it. I've added this task:");
+    // String[] splitDeadline = InputParser.getInput().replace("deadline",
+    // "").split(" /");
+    // String deadlineOnly = splitDeadline[0].trim();
+    // String taskDeadline = splitDeadline[1].trim();
+    // Deadline newDeadline = new Deadline(deadlineOnly, taskDeadline);
+    // taskList.add(newDeadline);
+    // System.out.println(newDeadline);
+    // System.out.println(" Now you have " + taskList.size() + " tasks in the
+    // list.");
+    // }
 
-    private static void markTask(boolean complete) {
-        Task task = taskList.get(InputParser.getTaskNum() - 1);
-        task.setDone(complete);
-        if (complete) {
-            System.out.println(" Nice! I've marked this task as done:");
-        } else {
-            System.out.println(" OK, I've marked this task as not done yet:");
-        }
-        System.out.println(task);
-    }
+    // private static void markTask(boolean complete) {
+    // Task task = taskList.get(InputParser.getTaskNum() - 1);
+    // task.setDone(complete);
+    // if (complete) {
+    // System.out.println(" Nice! I've marked this task as done:");
+    // } else {
+    // System.out.println(" OK, I've marked this task as not done yet:");
+    // }
+    // System.out.println(task);
+    // }
 
-    private static void listTasks() {
-        for (int i = 0; i < Task.getNumOfTasks(); i++) {
-            Task currTask = taskList.get(i);
-            System.out.println(" " + Integer.toString(currTask.taskNum) + currTask.toString());
-        }
-    }
+    // private static void listTasks() {
+    // for (int i = 0; i < Task.getNumOfTasks(); i++) {
+    // Task currTask = taskList.get(i);
+    // System.out.println(" " + Integer.toString(currTask.taskNum) +
+    // currTask.toString());
+    // }
+    // }
 
-    private static void addTodo(String input) throws LegoException {
-        String todoOnly = input.replace("todo", "").trim();
-        if (todoOnly.replace(" ", "").equals("")) {
-            throw new LegoException();
-        }
-        System.out.println(" Got it. I've added this task:");
-        Task newTodo = new Todo(todoOnly);
-        taskList.add(newTodo);
-        System.out.println(newTodo);
-        System.out.println(" Now you have " + taskList.size() + " tasks in the list.");
-    }
+    // private static void addTodo(String input) throws LegoException {
+    // String todoOnly = input.replace("todo", "").trim();
+    // if (todoOnly.replace(" ", "").equals("")) {
+    // throw new LegoException();
+    // }
+    // System.out.println(" Got it. I've added this task:");
+    // Task newTodo = new Todo(todoOnly);
+    // taskList.add(newTodo);
+    // System.out.println(newTodo);
+    // System.out.println(" Now you have " + taskList.size() + " tasks in the
+    // list.");
+    // }
 }

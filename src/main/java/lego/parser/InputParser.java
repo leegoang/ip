@@ -1,4 +1,4 @@
-package lego.ui;
+package lego.parser;
 
 import java.util.Scanner;
 
