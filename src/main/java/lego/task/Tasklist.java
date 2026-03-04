@@ -64,8 +64,8 @@ public class Tasklist {
     public void addNewEvent(String input) {
         String[] splitEvent = input.replace("event", "").split(" /");
         String eventOnly = splitEvent[0].trim();
-        String eventFrom = splitEvent[1].trim();
-        String eventTo = splitEvent[2].trim();
+        String eventFrom = splitEvent[1].replace("from", "").trim();
+        String eventTo = splitEvent[2].replace("to", "").trim();
         Event newEvent = new Event(eventOnly, eventFrom, eventTo);
         System.out.println(" Got it. I've added this task:");
         this.taskList.add(newEvent);
