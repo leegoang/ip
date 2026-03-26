@@ -95,12 +95,9 @@ public class Command {
                     ui.showInvalidNumberError();
                 }
                 break;
-            case "save":
-                try {
-                    dbHandler.saveToFile(tasks.getTaskList());
-                } catch (IOException e) {
-                    ui.showFileSaveError();
-                }
+            case "reset":
+                tasks.resetTaskList();
+                ui.showTaskResetText();
                 break;
             case "find":
                 tasks.findTask(this.input);

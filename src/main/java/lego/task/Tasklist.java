@@ -24,6 +24,10 @@ public class Tasklist {
         }
     }
 
+    public void resetTaskList() {
+        this.taskList = new ArrayList<>();
+    }
+
     public ArrayList<Task> getTaskList() {
         return this.taskList;
     }

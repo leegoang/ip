@@ -27,6 +27,10 @@ public class Ui {
         System.out.println(" File saved successfully.");
     }
 
+    public void showTaskResetText() {
+        System.out.println(" Task list has been reset. Starting fresh!");
+    }
+
     public void showFileMissingError() {
         System.out.println(" File not found. Starting with an empty task list.");
     }
@@ -38,7 +42,7 @@ public class Ui {
 
     public void showInvalidCommandError() {
         System.out.println(
-                "Invalid command. Please input the instruction again begining with 'todo', 'deadline', 'event', 'mark', 'unmark', 'list', 'final' or 'bye'.");
+                "Invalid command. Please input the instruction again begining with 'todo', 'deadline', 'event', 'mark', 'unmark', 'list', 'reset', 'find' or 'bye'.");
     }
 
     public void showInvalidNumberError() {

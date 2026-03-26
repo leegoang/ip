@@ -116,7 +116,7 @@ mark 1
 
 ```console
 unmark 1
- Nice! I've marked this task as done:
+ OK, I've marked this task as not done yet:
  [T][ ] buy milk
 ```
 
@@ -129,6 +129,13 @@ delete 1
 ```
 
 Task numbers are those shown by the most recent list command.
+
+* reset - deletes the current tasklist and restarts from a new tasklist.
+
+```console
+reset
+ Task list has been reset. Starting fresh!
+```
 
 ### Persistence
 
