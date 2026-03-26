@@ -103,6 +103,12 @@ public class Command {
             case "reset":
                 tasks.resetTaskList();
                 ui.showTaskResetText();
+            case "save":
+                try {
+                    dbHandler.saveToFile(tasks.getTaskList());
+                } catch (IOException e) {
+                    ui.showFileSaveError();
+                }
                 break;
             case "find":
                 try {
