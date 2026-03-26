@@ -4,10 +4,11 @@ todo buy chicken
 deadline CS2113 IP /Friday
 list
 event celebration /from 5pm /to 7pm
-mark 1
+mark 5
 list
-delete 1
+delete 5
 list
-save
 find buy
+reset
+list
 bye

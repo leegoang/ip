@@ -22,20 +22,24 @@
  [E][ ] celebration (from: 5pm to: 7pm)
  Now you have 5 tasks in the list.
  Nice! I've marked this task as done:
- [T][X] buy milk
- 1 [T][X] buy milk
+ [E][X] celebration (from: 5pm to: 7pm)
+ 1 [T][ ] buy milk
  2 [T][ ] buy bread
  3 [T][ ] buy chicken
  4 [D][ ] CS2113 IP (by: Friday)
- 5 [E][ ] celebration (from: 5pm to: 7pm)
+ 5 [E][X] celebration (from: 5pm to: 7pm)
  Noted. I've removed this task:
- [T][X] buy milk
+ [E][X] celebration (from: 5pm to: 7pm)
  Now you have 4 tasks in the list.
+ 1 [T][ ] buy milk
  2 [T][ ] buy bread
  3 [T][ ] buy chicken
  4 [D][ ] CS2113 IP (by: Friday)
- 5 [E][ ] celebration (from: 5pm to: 7pm)
  Here are the matching tasks in your list:
+ 1 [T][ ] buy milk
  2 [T][ ] buy bread
  3 [T][ ] buy chicken
+ Task list has been reset. Starting fresh!
+ Your task list is currently empty.
+ File saved successfully.
  Bye. Hope to see you again soon!
