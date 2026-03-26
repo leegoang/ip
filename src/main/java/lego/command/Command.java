@@ -42,6 +42,11 @@ public class Command {
         switch (this.command) {
             case "bye":
                 this.isRunning = false;
+                try {
+                    dbHandler.saveToFile(tasks.getTaskList());
+                } catch (IOException e) {
+                    ui.showFileSaveError();
+                }
                 ui.showClosingText();
                 break;
             case "list":
