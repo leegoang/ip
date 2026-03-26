@@ -89,6 +89,10 @@ public class Tasklist {
     }
 
     public void listTasks() {
+        if (this.taskList.isEmpty()) {
+            System.out.println(" Your task list is currently empty.");
+            return;
+        }
         for (int i = 0; i < Task.getNumOfTasks(); i++) {
             Task currTask = this.taskList.get(i);
             System.out.println(" " + Integer.toString(currTask.taskNum) + currTask.toString());
