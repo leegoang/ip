@@ -15,6 +15,18 @@ public class Ui {
         System.out.println(closingText);
     }
 
+    public void showAddTaskText() {
+        System.out.println(" Got it. I've added this task:");
+    }
+
+    public void showDeleteTaskText() {
+        System.out.println(" Noted. I've removed this task:");
+    }
+
+    public void showFileSavedText() {
+        System.out.println(" File saved successfully.");
+    }
+
     public void showFileMissingError() {
         System.out.println(" File not found. Starting with an empty task list.");
     }

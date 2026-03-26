@@ -44,6 +44,7 @@ public class Command {
                 this.isRunning = false;
                 try {
                     dbHandler.saveToFile(tasks.getTaskList());
+                    ui.showFileSavedText();
                 } catch (IOException e) {
                     ui.showFileSaveError();
                 }
