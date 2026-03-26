@@ -65,8 +65,8 @@ public class Tasklist {
         System.out.println(" Now you have " + this.taskList.size() + " tasks in the list.");
     }
 
-    public void addNewEvent(String input) {
-        String[] splitEvent = input.replace("event", "").split(" /");
+    public void addNewEvent(String input) throws LegoException {
+        String[] splitEvent = input.trim().split(" /");
         String eventOnly = splitEvent[0].trim();
         String eventFrom = splitEvent[1].replace("from", "").trim();
         String eventTo = splitEvent[2].replace("to", "").trim();
@@ -77,9 +77,9 @@ public class Tasklist {
         System.out.println(" Now you have " + this.taskList.size() + " tasks in the list.");
     }
 
-    public void addNewDeadline(String input) {
+    public void addNewDeadline(String input) throws LegoException {
         System.out.println(" Got it. I've added this task:");
-        String[] splitDeadline = input.replace("deadline", "").split(" /");
+        String[] splitDeadline = input.trim().split(" /");
         String deadlineOnly = splitDeadline[0].trim();
         String taskDeadline = splitDeadline[1].trim();
         Deadline newDeadline = new Deadline(deadlineOnly, taskDeadline);
@@ -96,10 +96,7 @@ public class Tasklist {
     }
 
     public void addTodo(String input) throws LegoException {
-        String todoOnly = input.replace("todo", "").trim();
-        if (todoOnly.replace(" ", "").equals("")) {
-            throw new LegoException();
-        }
+        String todoOnly = input.trim();
         System.out.println(" Got it. I've added this task:");
         Task newTodo = new Todo(todoOnly);
         this.taskList.add(newTodo);
@@ -107,9 +104,9 @@ public class Tasklist {
         System.out.println(" Now you have " + this.taskList.size() + " tasks in the list.");
     }
 
-    public void findTask(String input) {
+    public void findTask(String input) throws LegoException {
         boolean atLeastOneMatch = false;
-        String keyword = input.replace("find", "").trim();
+        String keyword = input.trim();
         System.out.println(" Here are the matching tasks in your list:");
         for (int i = 0; i < Task.getNumOfTasks(); i++) {
             Task currTask = this.taskList.get(i);

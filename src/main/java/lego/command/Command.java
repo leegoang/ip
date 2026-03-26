@@ -69,6 +69,7 @@ public class Command {
                 break;
             case "todo":
                 try {
+
                     tasks.addTodo(this.input);
                 } catch (LegoException e) {
                     ui.showEmptyDescriptionError("todo");
@@ -79,6 +80,8 @@ public class Command {
                     tasks.addNewDeadline(this.input);
                 } catch (IndexOutOfBoundsException e) {
                     ui.showDeadlineFormatError();
+                } catch (LegoException e) {
+                    ui.showEmptyDescriptionError("deadline");
                 }
                 break;
             case "event":
@@ -86,6 +89,8 @@ public class Command {
                     tasks.addNewEvent(this.input);
                 } catch (IndexOutOfBoundsException e) {
                     ui.showEventFormatError();
+                } catch (LegoException e) {
+                    ui.showEmptyDescriptionError("event");
                 }
                 break;
             case "delete":
@@ -100,7 +105,11 @@ public class Command {
                 ui.showTaskResetText();
                 break;
             case "find":
-                tasks.findTask(this.input);
+                try {
+                    tasks.findTask(this.input);
+                } catch (LegoException e) {
+                    ui.showEmptyDescriptionError("find");
+                }
                 break;
             default:
                 ui.showInvalidCommandError();

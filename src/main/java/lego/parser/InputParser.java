@@ -9,10 +9,11 @@ import java.util.Scanner;
  * input.
  */
 public class InputParser {
-    private String input;
+    private String userInput;
     private String command;
     private int taskNum;
     private Scanner scanner;
+    private String parsedInput;
 
     /**
      * Constructs an InputParser and initializes the scanner.
@@ -25,13 +26,14 @@ public class InputParser {
      * Reads the next line of input from the user.
      */
     public void getNextLine() {
-        this.input = this.scanner.nextLine();
+        this.userInput = this.scanner.nextLine();
         this.processInput();
     }
 
     public void processInput() {
-        String[] splitCommand = this.input.split(" ");
-        this.command = splitCommand[0];
+        String[] splitCommand = this.userInput.split(" ");
+        this.command = splitCommand[0].toLowerCase();
+        this.parsedInput = this.userInput.trim().substring(splitCommand[0].length()).trim();
         if (splitCommand.length > 1) {
             try {
                 this.taskNum = Integer.parseInt(splitCommand[1]);
@@ -56,7 +58,7 @@ public class InputParser {
      * @return the input string
      */
     public String getInput() {
-        return this.input;
+        return this.userInput;
     }
 
     /**
@@ -75,5 +77,9 @@ public class InputParser {
      */
     public int getTaskNum() {
         return this.taskNum;
+    }
+
+    public String getParsedInput() {
+        return this.parsedInput;
     }
 }

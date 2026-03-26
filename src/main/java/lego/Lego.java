@@ -59,8 +59,8 @@ public class Lego {
             inputParser.getNextLine();
             String instruction = inputParser.getCommand();
             int taskNum = inputParser.getTaskNum();
-            String input = inputParser.getInput();
-            Command cmd = new Command(instruction, input, taskNum);
+            String parsedInput = inputParser.getParsedInput();
+            Command cmd = new Command(instruction, parsedInput, taskNum);
             cmd.execute(this.tasks, this.ui, this.dbHandler);
             isRunning = cmd.isRunning();
         }
