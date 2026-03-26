@@ -3,7 +3,7 @@
 Chatbot name: Lego
 (Lego is a simple command-line chatbot that helps you keep track of your tasks.)
 
-This repository contains the skeleton of the Lego project used in CS2113-T.
+This repository contains the Lego project used in CS2113-T.
 The bot accepts a small set of text commands, stores your task list between
 sessions, and can be extended later.
 The sections below show how to get the project running and how to use all of
@@ -104,13 +104,21 @@ find buy
 
 ### Modifying tasks
 
-* done <task number> – mark the specified task as completed.
+* mark <task number> – mark the specified task as completed.
 
 ```console
 mark 1
  Nice! I've marked this task as done:
  [T][X] buy milk
-'''
+```
+
+* unmark <task number> – mark the specified task as completed.
+
+```console
+unmark 1
+ OK, I've marked this task as not done yet:
+ [T][ ] buy milk
+```
 
 * delete <task number> – remove the specified task from the list.
 
@@ -121,6 +129,13 @@ delete 1
 ```
 
 Task numbers are those shown by the most recent list command.
+
+* reset - deletes the current tasklist and restarts from a new tasklist.
+
+```console
+reset
+ Task list has been reset. Starting fresh!
+```
 
 ### Persistence
 
