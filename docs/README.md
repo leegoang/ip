@@ -104,13 +104,21 @@ find buy
 
 ### Modifying tasks
 
-* done <task number> – mark the specified task as completed.
+* mark <task number> – mark the specified task as completed.
 
 ```console
 mark 1
  Nice! I've marked this task as done:
  [T][X] buy milk
-'''
+```
+
+* unmark <task number> – mark the specified task as completed.
+
+```console
+unmark 1
+ Nice! I've marked this task as done:
+ [T][ ] buy milk
+```
 
 * delete <task number> – remove the specified task from the list.
 
