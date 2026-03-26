@@ -36,7 +36,7 @@ public class InputParser {
         this.parsedInput = this.userInput.trim().substring(splitCommand[0].length()).trim();
         if (splitCommand.length > 1) {
             try {
-                this.taskNum = Integer.parseInt(splitCommand[1]);
+                this.taskNum = Integer.parseInt(splitCommand[1]) - 1; // Convert to zero-based index
             } catch (NumberFormatException e) {
                 // Do nothing, as taskNum will not be used for non-mark/unmark commands
             }

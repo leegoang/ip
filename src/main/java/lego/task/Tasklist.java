@@ -17,8 +17,8 @@ public class Tasklist {
     }
 
     public void removeTask(int index) {
-        if (index > 0 && index <= this.taskList.size()) {
-            this.taskList.remove(index - 1);
+        if (index >= 0 && index < this.taskList.size()) {
+            this.taskList.remove(index);
         } else {
             throw new IndexOutOfBoundsException("Task does not exist. Choose another number.");
         }
@@ -38,27 +38,27 @@ public class Tasklist {
 
     public void markTask(int index) {
         if (index >= 0 && index < this.taskList.size()) {
-            this.taskList.get(index - 1).setDone(true);
+            this.taskList.get(index).setDone(true);
             System.out.println(" Nice! I've marked this task as done:");
-            System.out.println(this.taskList.get(index - 1));
+            System.out.println(this.taskList.get(index));
         } else {
             throw new IndexOutOfBoundsException("Task does not exist. Choose another number.");
         }
     }
 
     public void unmarkTask(int index) {
-        if (index > 0 && index <= this.taskList.size()) {
-            this.taskList.get(index - 1).setDone(false);
+        if (index >= 0 && index < this.taskList.size()) {
+            this.taskList.get(index).setDone(false);
             System.out.println(" OK, I've marked this task as not done yet:");
-            System.out.println(this.taskList.get(index - 1));
+            System.out.println(this.taskList.get(index));
         } else {
             throw new IndexOutOfBoundsException("Task does not exist. Choose another number.");
         }
     }
 
     public void deleteEvent(int index) {
-        Task taskToDelete = this.taskList.get(index - 1);
-        this.taskList.remove(index - 1);
+        Task taskToDelete = this.taskList.get(index);
+        this.taskList.remove(index);
         Task.decreaseNumOfTasks();
         System.out.println(" Noted. I've removed this task:");
         System.out.println(taskToDelete);
